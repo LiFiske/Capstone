@@ -1,0 +1,297 @@
+/* ============================================================
+   CAPSTONE TEAM SITE  —  Web Revival / Bold Indie-Zine
+   Palette pulled from the orange + navy reference image.
+   ============================================================ */
+
+/* ---------- THEME TOKENS (edit colors here) ---------- */
+:root {
+  --periwinkle:  #59689b;  /* background tone from the reference */
+  --navy:        #20283f;  /* deep navy */
+  --navy-panel:  #2a3450;  /* rail / section panels */
+  --navy-line:   #3d4a73;  /* subtle borders */
+  --orange:      #ff5a26;  /* primary accent */
+  --orange-deep: #d93a16;  /* pressed / hover */
+  --gold:        #f2a43a;  /* secondary accent */
+  --cream:       #f3e7d3;  /* body text */
+  --cream-dim:   #c9bfae;  /* muted text */
+
+  --rail-w: 220px;         /* width of each side rail */
+  --gap: 18px;
+  --radius: 4px;
+  --maxread: 680px;        /* readable width of center text */
+
+  --font-head: "Arial Black", "Helvetica Neue", Impact, sans-serif;
+  --font-body: "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--cream);
+  background-color: var(--periwinkle);
+
+  /* ============================================================
+     EDIT: BACKGROUND IMAGE
+     Drop your image at  assets/background.jpg  and it appears here.
+     Until then, the periwinkle color above shows as a fallback.
+     The image is FIXED (does not scroll) and covers the viewport.
+     ============================================================ */
+  background-image: url("assets/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  /* The page itself never scrolls — only the center column does. */
+  overflow: hidden;
+}
+
+/* ---------- 3-COLUMN FRAME ---------- */
+.site {
+  display: grid;
+  grid-template-columns: var(--rail-w) 1fr var(--rail-w);
+  gap: var(--gap);
+  height: 100vh;
+  padding: var(--gap);
+}
+
+/* ---------- SIDE RAILS (fixed, do not scroll) ---------- */
+.rail {
+  background: rgba(32, 40, 63, 0.88);
+  border: 3px solid var(--orange);
+  border-radius: var(--radius);
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: auto;             /* in case a rail gets taller than the screen */
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.35);
+}
+
+.rail-title {
+  font-family: var(--font-head);
+  letter-spacing: 1px;
+  font-size: 12px;
+  color: var(--gold);
+  text-transform: uppercase;
+  border-bottom: 2px dashed var(--navy-line);
+  padding-bottom: 8px;
+  margin-bottom: 2px;
+}
+
+.rail-right { align-items: stretch; }
+
+/* ---------- NAV BUTTONS (left rail) ---------- */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.navbtn {
+  font-family: var(--font-head);
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: var(--cream);
+  background: var(--navy-panel);
+  border: 2px solid var(--orange);
+  border-radius: var(--radius);
+  padding: 12px 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.05s ease, background 0.12s ease, color 0.12s ease;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+.navbtn:hover {
+  background: var(--orange);
+  color: var(--navy);
+}
+
+.navbtn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+/* Highlight the section you're currently viewing */
+.navbtn.is-active {
+  background: var(--orange);
+  color: var(--navy);
+  border-color: var(--gold);
+}
+
+/* ---------- RIGHT RAIL: CTA + LINKS ---------- */
+.cta {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--font-head);
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: var(--navy);
+  background: var(--orange);
+  border: 3px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 16px 12px;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+  transition: transform 0.05s ease, background 0.12s ease;
+}
+
+.cta:hover { background: var(--gold); }
+.cta:active { transform: translate(3px, 3px); box-shadow: 0 0 0; }
+
+.rail-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.linkbtn {
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  font-family: var(--font-head);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--cream);
+  background: var(--navy-panel);
+  border: 2px solid var(--navy-line);
+  border-radius: var(--radius);
+  padding: 10px 8px;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+.linkbtn:hover {
+  background: var(--orange);
+  color: var(--navy);
+  border-color: var(--orange);
+}
+
+/* ---------- CENTER COLUMN (the only thing that scrolls) ---------- */
+.center {
+  background: rgba(32, 40, 63, 0.82);
+  border: 3px solid var(--orange);
+  border-radius: var(--radius);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding: 28px clamp(16px, 4vw, 48px);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* Custom scrollbar (web-revival chunky look) */
+.center::-webkit-scrollbar { width: 14px; }
+.center::-webkit-scrollbar-track { background: var(--navy); }
+.center::-webkit-scrollbar-thumb {
+  background: var(--orange);
+  border: 3px solid var(--navy);
+  border-radius: 0;
+}
+
+/* ---------- SECTIONS ---------- */
+.section {
+  /* scroll-margin keeps the heading clear of the top edge when jumped to */
+  scroll-margin-top: 10px;
+  padding: 10px 0 48px;
+  border-bottom: 2px dashed var(--navy-line);
+}
+.section:last-child { border-bottom: none; }
+
+.section-title {
+  font-family: var(--font-head);
+  font-size: clamp(26px, 4vw, 40px);
+  line-height: 1.05;
+  color: var(--orange);
+  text-transform: uppercase;
+  margin: 0 0 18px;
+  text-shadow: 3px 3px 0 var(--navy);
+}
+
+.prose {
+  max-width: var(--maxread);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--cream);
+}
+.prose p { margin: 0 0 14px; }
+
+/* ---------- IMAGE PLACEHOLDERS ---------- */
+/* Draws a dashed box with a diagonal X and a label, like the sketch. */
+.ph {
+  position: relative;
+  width: 100%;
+  margin: 0 0 22px;
+  border: 3px dashed var(--gold);
+  border-radius: var(--radius);
+  background-color: rgba(89, 104, 155, 0.18);
+  background-image:
+    linear-gradient(to top right, transparent calc(50% - 1.5px), var(--gold) calc(50% - 1.5px), var(--gold) calc(50% + 1.5px), transparent calc(50% + 1.5px)),
+    linear-gradient(to top left,  transparent calc(50% - 1.5px), var(--gold) calc(50% - 1.5px), var(--gold) calc(50% + 1.5px), transparent calc(50% + 1.5px));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ph-wide     { aspect-ratio: 16 / 9; }
+.ph-portrait { aspect-ratio: 3 / 4; max-width: 320px; }
+
+.ph-label {
+  position: relative;
+  font-family: var(--font-head);
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--navy);
+  background: var(--gold);
+  padding: 6px 12px;
+  border-radius: 2px;
+}
+
+/* Spacer at the very end so the last section can reach the top on jump */
+.scroll-spacer { height: 70vh; }
+
+/* ============================================================
+   RESPONSIVE: on narrow screens, stack everything and let the
+   whole page scroll. Rails become horizontal bars at the edges.
+   ============================================================ */
+@media (max-width: 860px) {
+  body { overflow: auto; }
+
+  .site {
+    display: block;
+    height: auto;
+    padding: 12px;
+  }
+
+  .rail,
+  .center {
+    width: 100%;
+    margin-bottom: 12px;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  .center {
+    overflow: visible;
+    height: auto;
+  }
+
+  .nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .navbtn { flex: 1 1 30%; text-align: center; }
+
+  .scroll-spacer { display: none; }
+
+  /* Order: left nav on top, content, contact at bottom */
+  .rail-left   { order: 1; }
+  .center      { order: 2; }
+  .rail-right  { order: 3; }
+}
