@@ -1,0 +1,220 @@
+/* ============================================================
+   CAPSTONE SITE
+   Palette sampled from the team photos:
+     Lee's blazer blue ....... #47587b
+     Jon's blazer charcoal ... #2c2d33
+   ============================================================ */
+
+/* ---------- THEME TOKENS (tweak colors here) ---------- */
+:root {
+  --charcoal:       #2c2d33;  /* Jon's blazer — primary background */
+  --charcoal-deep:  #212125;  /* deeper shade for vignette/depth */
+  --charcoal-panel: #3a3b42;  /* cards / raised surfaces */
+  --charcoal-line:  #4a4b53;  /* borders */
+
+  --blue:           #47587b;  /* Lee's blazer — primary accent */
+  --blue-bright:    #6f90c6;  /* lifted blue for the hover glow */
+  --glow-rgb:       111, 144, 198;  /* --blue-bright as rgb, for glow alpha */
+
+  --ink:            #e9eaee;  /* main text */
+  --ink-dim:        #a7a9b2;  /* muted text */
+
+  --maxw: 1150px;
+  --radius: 6px;
+
+  --font-slab: "Roboto Slab", "Rockwell", Georgia, serif;
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; min-height: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+
+  /* Charcoal base with a soft vignette for depth.
+     ------------------------------------------------------------
+     EDIT: to use a static background image later, drop it at
+     assets/background.jpg and uncomment the two lines marked BG.
+     ------------------------------------------------------------ */
+  background-color: var(--charcoal);
+  background-image: radial-gradient(1200px 800px at 50% -10%,
+                      #353641 0%, var(--charcoal) 45%, var(--charcoal-deep) 100%);
+  /* BG: background-image: url("assets/background.jpg"); */
+  /* BG: background-size: cover; background-position: center; background-attachment: fixed; */
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+/* ---------- PAGE CONTAINER ---------- */
+.page {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 56px) clamp(16px, 4vw, 40px) 80px;
+}
+
+/* ---------- CAPSTONE WORDMARK ---------- */
+.wordmark {
+  display: inline-block;
+  margin: 0 0 clamp(28px, 4vw, 44px);
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: clamp(22px, 3.2vw, 36px);
+  letter-spacing: 3px;
+  color: var(--ink);
+  background: var(--charcoal-panel);
+  border: 2px solid var(--blue);
+  border-left: 6px solid var(--blue);
+  border-radius: var(--radius);
+  padding: 12px 24px;
+}
+
+/* ---------- HEADSHOT ROW ---------- */
+.team {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(12px, 2vw, 22px);
+  margin: 0 0 clamp(36px, 5vw, 56px);
+}
+
+.shot {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 800 / 1256;   /* matches the photos exactly — no crop */
+  border-radius: var(--radius);
+  background: var(--charcoal-panel);
+  border: 1px solid var(--charcoal-line);
+  /* base resting shadow */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  /* the lift + glow bloom in slowly and ease outward */
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.4s ease;
+}
+
+.shot {
+  cursor: pointer;            /* hints that photos are interactive */
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* evens out the different crops */
+  border-radius: inherit;
+  transition: filter 0.45s ease;
+}
+
+/* When the row is hovered, every photo desaturates... */
+.team:hover .shot img {
+  filter: grayscale(1) brightness(0.8);
+}
+
+/* ...except the one actually under the cursor, which stays in color */
+.team .shot:hover img {
+  filter: none;
+}
+
+/* Hovered photo: lift, blue outline, drop shadow + steady blue glow */
+.shot:hover {
+  transform: translateY(-12px) scale(1.02);
+  z-index: 3;
+  border-color: var(--blue-bright);
+  box-shadow:
+    0 22px 46px rgba(0, 0, 0, 0.6),
+    0 0 34px rgba(var(--glow-rgb), 0.45);
+}
+
+/* Slow glow that radiates outward and dissipates, looping while hovered */
+.shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.shot:hover::after {
+  opacity: 1;
+  animation: glow-dissipate 2.6s ease-out infinite;
+}
+
+@keyframes glow-dissipate {
+  0%   { box-shadow: 0 0 10px 2px rgba(var(--glow-rgb), 0.55); }
+  100% { box-shadow: 0 0 48px 18px rgba(var(--glow-rgb), 0);   }
+}
+
+/* Respect users who prefer less motion: keep the glow, drop the loop */
+@media (prefers-reduced-motion: reduce) {
+  .shot:hover::after { animation: none;
+    box-shadow: 0 0 40px 10px rgba(var(--glow-rgb), 0.3); }
+  .shot { transition: box-shadow 0.4s ease, transform 0.2s ease; }
+}
+
+/* ---------- TEAM BIO ---------- */
+.bio {
+  max-width: 760px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--ink-dim);
+  min-height: 200px;               /* steadies height as bios swap */
+  transition: opacity 0.14s ease;  /* quick crossfade on hover-swap */
+}
+
+.bio.is-fading { opacity: 0; }
+
+.bio-title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(20px, 2.4vw, 26px);
+  color: var(--ink);
+  margin: 0 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--blue);
+  display: inline-block;
+}
+
+.bio p { margin: 0 0 16px; }
+
+/* ---------- PORTLAND STATE MBA LOGO (bottom center) ---------- */
+.footer {
+  margin-top: clamp(44px, 6vw, 76px);
+  display: flex;
+  justify-content: center;
+}
+
+.logo-ph {
+  width: min(340px, 75%);
+  aspect-ratio: 5 / 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--blue-bright);
+  border-radius: var(--radius);
+  background: rgba(var(--glow-rgb), 0.06);
+}
+
+.logo-ph-label {
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 2px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--ink-dim);
+}
+
+/* When you drop in the real logo, it uses this instead of .logo-ph */
+.logo {
+  width: min(340px, 75%);
+  height: auto;
+  display: block;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 720px) {
+  .team { grid-template-columns: repeat(2, 1fr); }
+}
