@@ -1,4 +1,4 @@
-# Capstone Site
+# Capstone
 
 A single-page site to pitch our capstone team. Plain HTML/CSS plus one small
 script (the hover bio-swap) — no build step, drops straight onto GitHub Pages.
