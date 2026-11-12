@@ -167,6 +167,17 @@ body {
 
 .bio.is-fading { opacity: 0; }
 
+/* The per-person area keeps a steady height while bios swap... */
+.team-bio { min-height: 160px; }
+
+/* ...and the static FAQ sits in its own block, set apart by a rule. */
+.faq-section {
+  margin-top: clamp(28px, 4vw, 48px);
+  padding-top: clamp(24px, 4vw, 40px);
+  border-top: 1px solid var(--charcoal-line);
+  min-height: 0;          /* no swap here, so no reserved height */
+}
+
 .bio-title {
   font-family: var(--font-sans);
   font-weight: 600;

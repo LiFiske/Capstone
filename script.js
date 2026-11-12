@@ -1,17 +1,19 @@
 /* ============================================================
-   Hover a headshot -> the bio area swaps to that person.
-   Move the cursor away from the row -> it returns to the
-   default "Team Bio".
+   Hover a headshot -> the per-person bio area swaps to that
+   person. Move the cursor away from the row -> it returns to the
+   default "Meet the Team" copy. (The "What is a Capstone" FAQ is
+   a separate, static section and is NOT affected by hovering.)
 
    You don't need to edit this file. All the wording lives in
-   index.html (the default bio in #bio, each person in #bio-source).
-   Each photo's data-bio="..." must match a <template data-bio="...">.
+   index.html (the default intro in #team-bio, each person in
+   #bio-source). Each photo's data-bio="..." must match a
+   <template data-bio="...">.
    ============================================================ */
 
 (function () {
   "use strict";
 
-  var bio = document.getElementById("bio");
+  var bio = document.getElementById("team-bio");
   if (!bio) return;
 
   var team = document.querySelector(".team");
