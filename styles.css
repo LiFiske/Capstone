@@ -180,37 +180,97 @@ body {
 
 .bio p { margin: 0 0 16px; }
 
-/* ---------- PORTLAND STATE MBA LOGO (bottom center) ---------- */
+/* ---------- FAQ (the "What is a Capstone" copy) ---------- */
+.faq-q {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(16px, 1.7vw, 19px);
+  color: var(--ink);
+  margin: 28px 0 8px;
+}
+
+/* category labels inside the Project Examples list */
+.faq-cat {
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--blue-bright);
+  margin: 20px 0 8px;
+}
+
+.faq-list {
+  margin: 0 0 16px;
+  padding-left: 20px;
+}
+
+.faq-list li { margin: 0 0 10px; }
+
+.faq-list strong { color: var(--ink); }
+
+.faq-contact {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--charcoal-line);
+  font-size: 15px;
+}
+
+/* links inside the FAQ copy */
+.bio a {
+  color: var(--blue-bright);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(var(--glow-rgb), 0.4);
+}
+
+.bio a:hover {
+  color: #fff;
+  border-bottom-color: var(--blue-bright);
+}
+
+/* ---------- FOOTER: MBA LOGO + CONTACT (bottom center) ---------- */
 .footer {
   margin-top: clamp(44px, 6vw, 76px);
   display: flex;
   justify-content: center;
-}
-
-.logo-ph {
-  width: min(340px, 75%);
-  aspect-ratio: 5 / 2;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  border: 2px dashed var(--blue-bright);
-  border-radius: var(--radius);
-  background: rgba(var(--glow-rgb), 0.06);
+  gap: clamp(16px, 3vw, 32px);
+  flex-wrap: wrap;
 }
 
-.logo-ph-label {
-  font-weight: 600;
-  font-size: 12px;
+/* Contact: plain slab-serif text link, no box */
+.contact-link {
+  font-family: var(--font-slab);
+  font-weight: 700;
+  font-size: clamp(16px, 2vw, 22px);
   letter-spacing: 2px;
-  line-height: 1.5;
-  text-align: center;
-  color: var(--ink-dim);
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--blue);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-/* When you drop in the real logo, it uses this instead of .logo-ph */
+.contact-link:hover {
+  color: var(--blue-bright);
+  border-bottom-color: var(--blue-bright);
+}
+
+/* Portland State MBA logo (links to the program page) */
+.logo-link {
+  display: inline-flex;
+  line-height: 0;
+  transition: transform 0.2s ease, filter 0.3s ease;
+}
+
+.logo-link:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 6px 16px rgba(var(--glow-rgb), 0.45));
+}
+
 .logo {
-  width: min(340px, 75%);
-  height: auto;
+  width: auto;
+  height: clamp(72px, 10vw, 104px);
   display: block;
 }
 
